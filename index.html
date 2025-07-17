@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Página com Música</title>
+    <title>Feliz Aniversário Marcela! 🎉</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #ff6b9d, #ffc3e0, #ffb3d9);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            position: relative;
+        }
+
+        .main-title {
+            font-size: 3.5em;
+            color: #fff;
+            text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.3);
+            margin-bottom: 20px;
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes glow {
+            from {
+                text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.3), 0 0 20px #ff6b9d;
+            }
+
+            to {
+                text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.3), 0 0 30px #ff1493;
+            }
+        }
+
+        .subtitle {
+            font-size: 1.5em;
+            color: #fff;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .section {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 20px;
+            padding: 30px;
+            margin: 30px 0;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .section::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255, 182, 193, 0.1) 0%, transparent 70%);
+            animation: rotate 20s linear infinite;
+        }
+
+        @keyframes rotate {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        .section-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .romantic-quotes {
+            text-align: center;
+            margin: 40px 0;
+        }
+
+        .quote {
+            font-size: 1.3em;
+            font-style: italic;
+            color: #d1477a;
+            margin: 20px 0;
+            display: none;
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        .quote.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .photo-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+
+        .photo-placeholder {
+            height: 200px;
+            background: linear-gradient(45deg, #ffb3d9, #ffc3e0);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #d1477a;
+            font-size: 1.2em;
+            border: 3px dashed #ff6b9d;
+            transition: transform 0.3s ease;
+        }
+
+        .photo-placeholder:hover {
+            transform: scale(1.05);
+        }
+
+        .celebration-elements {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 30px;
+            margin: 40px 0;
+            flex-wrap: wrap;
+        }
+
+        .element {
+            font-size: 4em;
+            animation: bounce 2s ease-in-out infinite;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .element:hover {
+            transform: scale(1.2);
+        }
+
+        .element:nth-child(1) {
+            animation-delay: 0s;
+        }
+
+        .element:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .element:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+
+        .element:nth-child(4) {
+            animation-delay: 0.6s;
+        }
+
+        .element:nth-child(5) {
+            animation-delay: 0.8s;
+        }
+
+        @keyframes bounce {
+
+            0%,
+            20%,
+            50%,
+            80%,
+            100% {
+                transform: translateY(0);
+            }
+
+            40% {
+                transform: translateY(-20px);
+            }
+
+            60% {
+                transform: translateY(-10px);
+            }
+        }
+
+        .floating-hearts {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1000;
+        }
+
+        .heart {
+            position: absolute;
+            color: #ff1493;
+            font-size: 2em;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 1;
+            }
+
+            100% {
+                transform: translateY(-100px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        .music-controls {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 50px;
+            padding: 15px;
+            box-shadow: 0 5px 2px rgba(0, 0, 0, 0.2);
+            z-index: 1001;
+        }
+
+        .play-btn {
+            background: #ff6b9d;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            font-size: 1.5em;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .play-btn:hover {
+            background: #ff1493;
+            transform: scale(1.1);
+        }
+
+        .message-box {
+            background: linear-gradient(135deg, #ff6b9d, #ffc3e0);
+            border-radius: 20px;
+            padding: 30px;
+            color: white;
+            text-align: center;
+            font-size: 1.2em;
+            line-height: 1.6;
+            margin: 30px 0;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .sparkle {
+            position: absolute;
+            color: #ffd700;
+            font-size: 1.5em;
+            animation: sparkle 3s ease-in-out infinite;
+        }
+
+        @keyframes sparkle {
+
+            0%,
+            100% {
+                opacity: 0;
+                transform: scale(0);
+            }
+
+            50% {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .cake-animation {
+            text-align: center;
+            margin: 40px 0;
+        }
+
+        .cake {
+            font-size: 6em;
+            animation: wiggle 2s ease-in-out infinite;
+            display: inline-block;
+        }
+
+        @keyframes wiggle {
+
+            0%,
+            100% {
+                transform: rotate(0deg);
+            }
+
+            25% {
+                transform: rotate(-5deg);
+            }
+
+            75% {
+                transform: rotate(5deg);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .main-title {
+                font-size: 2.5em;
+            }
+
+            .celebration-elements {
+                gap: 15px;
+            }
+
+            .element {
+                font-size: 3em;
+            }
+
+            .cake {
+                font-size: 4em;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="floating-hearts" id="hearts"></div>
+
+    <div class="container">
+        <header>
+            <h1 class="main-title">Feliz Aniversário Marcela! 🎉</h1>
+            <p class="subtitle">Com todo meu amor e carinho ❤️</p>
+        </header>
+        <div class="music-controls">
+            <button class="play-btn" onclick="toggleMusic()"> <audio controls>
+                    <source src="musica.mp3" type="audio/mpeg">
+                    Seu navegador não suporta áudio.
+                </audio></button>
+        </div>
+
+        <div class="section">
+            <div class="section-content">
+                <div class="celebration-elements">
+                    <span class="element">🌹</span>
+                    <span class="element">💖</span>
+                    <span class="element">🎂</span>
+                    <span class="element">🎈</span>
+                    <span class="element">🌺</span>
+                </div>
+
+                <div class="cake-animation">
+                    <div class="cake">🎂</div>
+                    <p style="font-size: 1.5em; color: #d1477a; margin-top: 10px;">Parabéns, meu amor!</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-content">
+                <h2 style="text-align: center; color: #d1477a; margin-bottom: 30px;">Mensagens do Coração 💕</h2>
+                <div class="romantic-quotes">
+                    <div class="quote active">
+                        "Marcela, você é a luz da minha vida e a razão do meu sorriso todos os dias. Feliz aniversário,
+                        meu amor!"
+                    </div>
+                    <div class="quote">
+                        "Cada dia ao seu lado é um presente. Hoje celebramos você e todo o amor que você traz para nossa
+                        vida."
+                    </div>
+                    <div class="quote">
+                        "Que este novo ano de vida seja repleto de alegrias, realizações e muito amor. Você merece tudo
+                        de melhor!"
+                    </div>
+                    <div class="quote">
+                        "Minha querida Marcela, você é única e especial. Que Deus abençoe sempre sua vida com muita
+                        felicidade."
+                    </div>
+                    <div class="quote">
+                        "O amor que sinto por você cresce a cada dia. Feliz aniversário para a mulher mais maravilhosa
+                        do mundo!"
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-content">
+                <h2 style="text-align: center; color: #d1477a; margin-bottom: 30px;">Galeria de Momentos 📸</h2>
+                <div class="photo-gallery">
+
+                    <div class="photo-placeholder"><img src="img2.png" alt="IMAGEM 2">
+                    </div>
+                    <div class="photo-placeholder"><img src="img4.png" alt="IMAGEM 4">
+                    </div>
+                    <div class="photo-placeholder"><img src="img2.png" alt="IMAGEM 2">
+                    </div>
+                    <div class="photo-placeholder"><img src="img4.png" alt="IMAGEM 4">
+                    </div>
+                    <div class="photo-placeholder"><img src="img2.png" alt="IMAGEM 2">
+                    </div>
+                   
+                  
+                </div>
+            </div>
+        </div>
+
+        <div class="message-box">
+            <h2 style="margin-bottom: 20px;">Para Minha Amada Esposa 💖</h2>
+            <p>
+                Marcela, neste dia tão especial, quero que você saiba o quanto você significa para mim.
+                Você é minha companheira, minha melhor amiga, meu amor verdadeiro.
+                Que este novo ano de vida seja repleto de sonhos realizados,
+                sorrisos sinceros e momentos inesquecíveis ao meu lado.
+            </p>
+            <p style="margin-top: 20px; font-size: 1.3em;">
+                Te amo infinitamente! 💕
+            </p>
+        </div>
+    </div>
+
+
+
+    <script>
+        // Frases românticas que alternam
+        const quotes = document.querySelectorAll('.quote');
+        let currentQuote = 0;
+
+        function changeQuote() {
+            quotes[currentQuote].classList.remove('active');
+            currentQuote = (currentQuote + 1) % quotes.length;
+            quotes[currentQuote].classList.add('active');
+        }
+
+        setInterval(changeQuote, 4000);
+
+        // Corações flutuantes
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.className = 'heart';
+            heart.innerHTML = '💖';
+            heart.style.left = Math.random() * 100 + '%';
+            heart.style.animationDuration = (Math.random() * 3 + 3) + 's';
+            heart.style.fontSize = (Math.random() * 1.5 + 1) + 'em';
+
+            document.getElementById('hearts').appendChild(heart);
+
+            setTimeout(() => {
+                heart.remove();
+            }, 6000);
+        }
+
+        setInterval(createHeart, 2000);
+
+        // Sparkles nos elementos
+        function createSparkle(element) {
+            const sparkle = document.createElement('div');
+            sparkle.className = 'sparkle';
+            sparkle.innerHTML = '✨';
+            sparkle.style.left = Math.random() * 100 + '%';
+            sparkle.style.top = Math.random() * 100 + '%';
+
+            element.appendChild(sparkle);
+
+            setTimeout(() => {
+                sparkle.remove();
+            }, 3000);
+        }
+
+        // Adiciona sparkles aos elementos celebrativos
+        document.querySelectorAll('.element').forEach(element => {
+            element.addEventListener('click', () => {
+                createSparkle(element.closest('.section'));
+            });
+        });
+
+        // Música (simulada)
+        let musicPlaying = false;
+        let musicInterval;
+
+        function toggleMusic() {
+            const btn = document.querySelector('.play-btn');
+
+            if (musicPlaying) {
+                btn.innerHTML = '🎵';
+                musicPlaying = false;
+                clearInterval(musicInterval);
+            } else {
+                btn.innerHTML = '⏸️';
+                musicPlaying = true;
+
+                // Simula música com efeitos visuais
+                musicInterval = setInterval(() => {
+                    const randomElement = document.querySelectorAll('.element')[Math.floor(Math.random() * 5)];
+                    randomElement.style.color = '#' + Math.floor(Math.random() * 16777215).toString(16);
+
+                    setTimeout(() => {
+                        randomElement.style.color = '';
+                    }, 500);
+                }, 1000);
+
+            }
+
+        }
+
+        // Adiciona mais corações quando clica nos elementos
+        document.querySelectorAll('.element').forEach(element => {
+            element.addEventListener('click', () => {
+                for (let i = 0; i < 5; i++) {
+                    setTimeout(() => createHeart(), i * 200);
+                }
+
+
+            });
+        });
+
+        // Mensagem especial quando clica no bolo
+        document.querySelector('.cake').addEventListener('click', () => {
+            alert('🎂 Parabéns Marcela! Que todos os seus desejos se realizem! 🎂');
+        });
+
+        // Efeito de zoom suave no scroll
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const rate = scrolled * -0.5;
+            document.querySelector('.main-title').style.transform = `translateY(${rate}px)`;
+        });
+    </script>
+</body>
+
+</html>
